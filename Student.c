@@ -139,6 +139,52 @@ void update_student(void)
     printf("Student Updated. \n");
 }
 
+// Delete
+void delete_student(void)
+{
+    FILE *file = fopen("students.dat", "rb");
+    if (file == NULL)
+    {
+        printf("\nNo Students here. \n");
+        return;
+    }
+
+    FILE *temp = fopen("temp.dat", "wb");
+
+    int id;
+    int found = 0;
+    Student s;
+
+    printf("\nEnter Student ID to delete: ");
+    scanf("%d", &id);
+
+
+    while (fread(&s, sizeof(Student), 1, file) == 1)
+    {
+        if (s.studentID == id)
+        {
+            found = 1;
+            continue; //skips adding data to temp
+        }
+
+        fwrite(&s, sizeof(Student), 1, temp);
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    if (!found)
+    {
+        remove("temp.dat");
+        printf("Not found\n");
+        return;
+    }
+    remove("students.dat");
+    rename("temp.dat", "students.dat");
+
+    printf("Student Deleted \n");
+}
+
 int main(void)
 {
     int choice = -1;
@@ -148,6 +194,7 @@ int main(void)
         printf("1. Add student\n");
         printf("2. Show all students\n");
         printf("3. Update student by ID\n");
+        printf("4. Delete student by ID\n");
 
         printf("Enter Choice: \n");
         scanf("%d", &choice);
@@ -162,6 +209,9 @@ int main(void)
             break;
         case 3:
             update_student();
+            break;
+        case 4:
+            delete_student();
             break;
         default:
             break;
