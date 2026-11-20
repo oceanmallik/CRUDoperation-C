@@ -49,3 +49,28 @@ void capture_student(void)
     printf("Student Added \n");
 }
 
+int main(void)
+{
+    int choice = -1;
+    while (choice != 0)
+    {
+        printf("Student Menu\n");
+        printf("1. Add student\n");
+
+        printf("Enter Choice: \n");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            capture_student();
+            break;
+        
+        default:
+            break;
+        }
+    }
+
+    return 0;
+}
+
