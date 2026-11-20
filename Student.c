@@ -41,7 +41,7 @@ void capture_student(void)
     scanf(" %[^\n]", s.department);
 
     printf("Enter CGPA: \n");
-    scanf(" %f", s.cgpa);
+    scanf(" %f", &s.cgpa);
 
     fwrite(&s, sizeof(Student), 1, file);
     fclose(file);
