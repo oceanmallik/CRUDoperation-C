@@ -49,6 +49,35 @@ void capture_student(void)
     printf("Student Added \n");
 }
 
+// Read
+void all_students(void)
+{
+    FILE *file = fopen("students.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("Error with the file\n");
+        return;
+    }
+
+    Student s;
+
+    printf("List of all Students\n");
+
+    while (fread(&s, sizeof(Student), 1, file) == 1)
+    {
+        printf("Student ID: %d\n", s.studentID);
+        printf("Name: %s\n", s.name);
+        printf("Email: %s\n", s.email);
+        printf("Phone: %s\n", s.phone);
+        printf("Department: %s\n", s.department);
+        printf("CGPA: %.2f\n", s.cgpa);
+
+    }
+
+    fclose(file);
+}
+
 int main(void)
 {
     int choice = -1;
@@ -56,6 +85,7 @@ int main(void)
     {
         printf("Student Menu\n");
         printf("1. Add student\n");
+        printf("2. Show all students\n");
 
         printf("Enter Choice: \n");
         scanf("%d", &choice);
@@ -65,7 +95,9 @@ int main(void)
         case 1:
             capture_student();
             break;
-        
+        case 2:
+            all_students();
+            break;
         default:
             break;
         }
