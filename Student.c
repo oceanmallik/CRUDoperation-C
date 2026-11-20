@@ -78,6 +78,67 @@ void all_students(void)
     fclose(file);
 }
 
+// Update
+void update_student(void)
+{
+    FILE *file = fopen("students.dat", "rb");
+    if (file == NULL)
+    {
+        printf("No students here. \n");
+        return;
+    }
+
+    FILE *temp = fopen("temp.dat", "wb");
+    
+    int id;
+    int found = 0;
+    Student s;
+
+    printf("Enter Students ID to update: \n");
+    scanf("%d", &id);
+
+    while (fread(&s, sizeof(Student), 1, file) == 1)
+    {
+        if (s.studentID == id)
+        {
+            found = 1;
+
+            printf("Enter New Name: \n");
+            scanf(" %[^\n]", s.name);
+
+            printf("Enter New Email: \n");
+            scanf(" %[^\n]", s.email);
+
+            printf("Enter New Phone: \n");
+            scanf(" %[^\n]", s.phone);
+
+            printf("Enter New Department: \n");
+            scanf(" %[^\n]", s.department);
+
+            printf("Enter New CGPA: \n");
+            scanf("%f", &s.cgpa);
+        }
+
+        fwrite(&s, sizeof(Student), 1, temp);
+    }
+
+
+    fclose(file);
+    fclose(temp);
+
+    if (!found)
+    {
+        remove("temp.dat");
+        printf("Not found\n");
+        return;
+    }
+
+    remove("students.dat");
+    rename("temp.dat", "students.dat");
+
+    printf("Student Updated. \n");
+}
+
 int main(void)
 {
     int choice = -1;
@@ -86,6 +147,7 @@ int main(void)
         printf("Student Menu\n");
         printf("1. Add student\n");
         printf("2. Show all students\n");
+        printf("3. Update student by ID\n");
 
         printf("Enter Choice: \n");
         scanf("%d", &choice);
@@ -97,6 +159,9 @@ int main(void)
             break;
         case 2:
             all_students();
+            break;
+        case 3:
+            update_student();
             break;
         default:
             break;
