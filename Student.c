@@ -1,3 +1,6 @@
+// Ocean Mallik	            253-35-087
+// Hanif shahoria abide 	253-35-459
+// Ashikur Rahman Himel 	253-35-046
 #include <stdio.h>
 
 typedef struct
